@@ -2,7 +2,7 @@
 	"id": "leitura-de-tarokka",
 	"title": "Leitura de Tarokka",
 	"description": "Fork independente do módulo Tarokka para Foundry VTT, com leituras de Tarokka em português, seleção de sistema e suporte a D&D 5e/5.5, AD&D 1e/2e, D&D 3.5 e Old Dragon 2. Adaptado do módulo original de GM RedVelvet e do projeto web de mcdoh.",
-	"version": "1.0.33",
+	"version": "1.0.34",
 	"compatibility": {
 		"minimum": "12",
 		"verified": "14"
@@ -28,8 +28,8 @@
 	],
 	"socket": true,
 	"license": "MIT",
-	"readme": "README.md",
-	"changelog": "CHANGELOG.md",
+	"readme": "https://github.com/rangelsardinha/leitura-de-tarokka/blob/main/README.md",
+	"changelog": "https://github.com/rangelsardinha/leitura-de-tarokka/blob/main/CHANGELOG.md",
 	"url": "https://github.com/rangelsardinha/leitura-de-tarokka",
 	"manifest": "https://github.com/rangelsardinha/leitura-de-tarokka/releases/latest/download/module.json",
 	"download": "https://github.com/rangelsardinha/leitura-de-tarokka/releases/latest/download/module.zip"

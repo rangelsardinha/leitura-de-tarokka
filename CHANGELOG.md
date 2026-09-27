@@ -5,6 +5,12 @@ All notable changes to this module are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.34] - 2026-09-27
+
+### Fixed
+
+- Manifest atualizado para apontar `readme` e `changelog` para as URLs publicas do GitHub.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed
