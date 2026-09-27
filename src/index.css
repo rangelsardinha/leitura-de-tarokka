@@ -6,18 +6,18 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @config '../tailwind.config.js';
 
-#tarokka-app .window-content {
+#leitura-de-tarokka-app .window-content {
 	padding: 0;
 	overflow: auto;
 	background: #0a0a0a;
 }
 
-#tarokka-root {
+#leitura-de-tarokka-root {
 	height: 100%;
 	width: 100%;
 }
 
-#tarokka-app {
+#leitura-de-tarokka-app {
 	.perspective {
 		perspective: 1000px;
 	}

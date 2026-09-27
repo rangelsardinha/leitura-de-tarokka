@@ -21,7 +21,7 @@ const foundryMergeObject: (original: unknown, other?: unknown) => any =
 
 if (!FoundryApplication) {
 	throw new Error(
-		'Tarokka: could not find a Foundry Application (v1) class (checked foundry.appv1.api.Application and the global Application).',
+		'Leitura de Tarokka: could not find a Foundry Application (v1) class (checked foundry.appv1.api.Application and the global Application).',
 	);
 }
 
@@ -30,9 +30,9 @@ export class TarokkaApplication extends FoundryApplication {
 
 	static get defaultOptions() {
 		return foundryMergeObject(super.defaultOptions, {
-			id: 'tarokka-app',
-			title: game.i18n.localize('TAROKKA.windowTitle'),
-			template: 'modules/tarokka/dist/empty.html',
+			id: 'leitura-de-tarokka-app',
+			title: game.i18n.localize('LEITURA_TAROKKA.windowTitle'),
+			template: 'modules/leitura-de-tarokka/dist/empty.html',
 			width: 920,
 			height: 720,
 			resizable: true,
@@ -49,9 +49,9 @@ export class TarokkaApplication extends FoundryApplication {
 		try {
 			return await super._renderInner(data);
 		} catch (err) {
-			console.warn('Tarokka | template render failed, using empty mount:', err);
+			console.warn('Leitura de Tarokka | template render failed, using empty mount:', err);
 			const jq = (globalThis as any).jQuery ?? (globalThis as any).$;
-			return jq('<div class="tarokka-mount"></div>');
+			return jq('<div class="leitura-de-tarokka-mount"></div>');
 		}
 	}
 
@@ -65,7 +65,7 @@ export class TarokkaApplication extends FoundryApplication {
 
 		container.innerHTML = '';
 		const mount = document.createElement('div');
-		mount.id = 'tarokka-root';
+		mount.id = 'leitura-de-tarokka-root';
 		container.appendChild(mount);
 
 		this.root = createRoot(mount);

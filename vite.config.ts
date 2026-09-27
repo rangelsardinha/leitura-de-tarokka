@@ -21,11 +21,11 @@ export default defineConfig({
 		lib: {
 			entry: 'src/main.ts',
 			formats: ['es'],
-			fileName: () => 'tarokka.js',
+			fileName: () => 'leitura-de-tarokka.js',
 		},
 		rollupOptions: {
 			output: {
-				assetFileNames: 'tarokka.css',
+				assetFileNames: 'leitura-de-tarokka.css',
 			},
 		},
 		sourcemap: true,

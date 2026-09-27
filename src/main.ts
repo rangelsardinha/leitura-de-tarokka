@@ -4,28 +4,28 @@ import { TarokkaApplication } from '@/TarokkaApplication';
 import { registerGameState } from '@/foundry/state';
 import { registerSocket } from '@/foundry/socket';
 
-const MODULE_ID = 'tarokka';
+const MODULE_ID = 'leitura-de-tarokka';
 
 let appInstance: TarokkaApplication | null = null;
 
-function openTarokka(): void {
+function openLeituraDeTarokka(): void {
 	if (!appInstance) appInstance = new TarokkaApplication();
 	appInstance.render(true, { focus: true });
 }
 
 function exposeApi(): void {
 	const mod = game.modules.get(MODULE_ID);
-	if (mod) mod.api = { open: openTarokka };
+	if (mod) mod.api = { open: openLeituraDeTarokka };
 }
 
 Hooks.once('init', () => {
-	console.log('Tarokka | init');
+	console.log('Leitura de Tarokka | init');
 	registerGameState();
 	exposeApi();
 });
 
 Hooks.once('ready', () => {
-	console.log('Tarokka | ready');
+	console.log('Leitura de Tarokka | ready');
 	registerSocket();
 	exposeApi();
 });
@@ -37,15 +37,15 @@ Hooks.once('ready', () => {
 // break the scene controls toolbar for the rest of the game.
 Hooks.on('getSceneControlButtons', (controls: any) => {
 	try {
-		const title = 'TAROKKA.controlName';
+		const title = 'LEITURA_TAROKKA.controlName';
 		const icon = 'fa-solid fa-clone';
 
 		if (Array.isArray(controls)) {
 			controls.push({
-				name: 'tarokka',
+				name: MODULE_ID,
 				title,
 				icon,
-				layer: 'tarokka',
+				layer: MODULE_ID,
 				visible: true,
 				tools: [
 					{
@@ -53,15 +53,15 @@ Hooks.on('getSceneControlButtons', (controls: any) => {
 						title,
 						icon,
 						button: true,
-						onClick: openTarokka,
+						onClick: openLeituraDeTarokka,
 					},
 				],
 			});
 			return;
 		}
 
-		controls.tarokka = {
-			name: 'tarokka',
+		controls[MODULE_ID] = {
+			name: MODULE_ID,
 			title,
 			icon,
 			order: Object.keys(controls).length,
@@ -73,12 +73,12 @@ Hooks.on('getSceneControlButtons', (controls: any) => {
 					icon,
 					order: 1,
 					button: true,
-					onClick: openTarokka,
-					onChange: openTarokka,
+					onClick: openLeituraDeTarokka,
+					onChange: openLeituraDeTarokka,
 				},
 			},
 		};
 	} catch (err) {
-		console.error('Tarokka | failed to add scene control button:', err);
+		console.error('Leitura de Tarokka | failed to add scene control button:', err);
 	}
 });

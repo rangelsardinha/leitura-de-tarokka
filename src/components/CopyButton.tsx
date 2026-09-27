@@ -16,7 +16,7 @@ export default function CopyButton({
 	title,
 	copy,
 	Icon = CopyIcon,
-	tooltip = ['Copy', 'Copied'],
+	tooltip = ['Copiar', 'Copiado'],
 	className,
 	size = 16,
 }: CopyButtonProps) {
@@ -28,7 +28,7 @@ export default function CopyButton({
 			setCopied(true);
 			setTimeout(() => setCopied(false), 2000);
 		} catch (err) {
-			console.error('Failed to copy!', err);
+			console.error('Falha ao copiar!', err);
 		}
 	};
 

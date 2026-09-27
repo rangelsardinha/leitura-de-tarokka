@@ -2,6 +2,7 @@ import { CircleX } from 'lucide-react';
 import { useAppContext } from '@/AppContext';
 import TarokkaDeck from '@/lib/TarokkaDeck';
 import { getURL } from '@/tools';
+import { getReadingSpread } from '@/constants';
 
 import { Deck } from '@/types';
 
@@ -16,7 +17,14 @@ export default function CardSelect({ className = '' }: CardSelectProps) {
 	const { cards: hand, settings } = gameData;
 
 	const handIDs = hand.map(({ id }) => id);
-	const selectDeck: Deck | null = selectCardIndex >= 0 ? hand[selectCardIndex].deck : null;
+	const spread = getReadingSpread(settings.readingSpread, settings.gameSystem);
+	const positionDeck = selectCardIndex >= 0 ? spread.positions[selectCardIndex]?.deck : null;
+	const selectDeck: Deck | null =
+		positionDeck === 'both'
+			? 'both'
+			: selectCardIndex >= 0
+				? hand[selectCardIndex]?.deck
+				: null;
 
 	const close = () => setSelectCardIndex(-1);
 
@@ -28,7 +36,12 @@ export default function CardSelect({ className = '' }: CardSelectProps) {
 
 	if (!selectDeck) return null;
 
-	const cards = selectDeck === 'high' ? tarokkaDeck.getHigh() : tarokkaDeck.getLow();
+	const cards =
+		selectDeck === 'both'
+			? tarokkaDeck.getAll()
+			: selectDeck === 'high'
+				? tarokkaDeck.getHigh()
+				: tarokkaDeck.getLow();
 
 	return (
 		<div
@@ -50,13 +63,13 @@ export default function CardSelect({ className = '' }: CardSelectProps) {
 					.map((card) => (
 						<div
 							key={card.id}
-							className={`relative h-[21vh] w-[15vh] perspective transition-transform duration-200 hover:scale-150 z-0 hover:z-10`}
+							className={`relative z-0 h-[21vh] w-[15vh] perspective origin-center transition-transform duration-200 hover:z-[60] hover:scale-[1.5]`}
 							onClick={() => emitSelect(card.id)}
 						>
 							<img
 								src={getURL(card, settings)}
 								alt={card.aria}
-								className="rounded-lg border border-yellow-500/25 hover:drop-shadow-[0_0_3px_#ffd700/50]"
+								className="h-full w-full object-contain rounded-lg border border-yellow-500/25 hover:drop-shadow-[0_0_3px_#ffd700/50]"
 							/>
 						</div>
 					))}

@@ -8,13 +8,21 @@ export interface SwitchProps {
 }
 
 const nonInitialCaps = /(?!^)([A-Z])/g;
+const labels: Record<string, string> = {
+	notes: 'notas',
+	positionBack: 'posição no verso',
+	positionFront: 'posição revelada',
+	prophecy: 'profecia',
+	tilt: 'inclinação',
+	remoteTilt: 'inclinação remota',
+};
 
 export default function Switch({ label, value, toggleAction, className }: SwitchProps) {
 	return (
 		<label
 			className={`flex items-center justify-between gap-2 w-full cursor-pointer text-yellow-400 hover:text-yellow-300 ${className}`}
 		>
-			<span className="text-sm capitalize">{label.replace(nonInitialCaps, ' $1')}</span>
+			<span className="text-sm">{labels[label] ?? label.replace(nonInitialCaps, ' $1')}</span>
 
 			<div className="relative inline-block w-8 h-4 align-middle select-none transition duration-200 ease-in">
 				<input

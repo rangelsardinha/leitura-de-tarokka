@@ -5,11 +5,12 @@ import { useAppContext } from '@/AppContext';
 import CopyButton from '@/components/CopyButton';
 import Scrim from '@/components/Scrim';
 import { getCardInfo } from '@/tools';
-import { cardMap, layout } from '@/constants/tarokka';
+import { getReadingSpread } from '@/constants/tarokka';
 
 export default function Notes() {
 	const { gameData, isGM, settings } = useAppContext();
 	const { cards } = gameData;
+	const spread = getReadingSpread(settings.readingSpread, settings.gameSystem);
 
 	const show = cards.length > 0 && cards.every(({ flipped }) => flipped);
 
@@ -17,17 +18,12 @@ export default function Notes() {
 
 	const notes: (string[] | null)[] = useMemo(
 		() =>
-			Array.from({ length: 9 })
-				.map((_cell: unknown, index: number) => cards[cardMap[index]])
-				.map((card, index) =>
-					card ? getCardInfo(card, layout[cardMap[index]], isGM, settings) : null,
-				)
-				.map(
-					(_cell: unknown, index: number, cards) =>
-						cards[Number(Object.keys(cardMap).find((key) => cardMap[Number(key)] === index)) || 0],
+			spread.positions
+				.map((position, index) =>
+					cards[index] ? getCardInfo(cards[index], position, isGM, settings) : null,
 				)
 				.filter((truthy) => truthy),
-		[cards, isGM, settings],
+		[cards, isGM, settings, spread],
 	);
 
 	const showNotes = show && open && (isGM || settings.notes);

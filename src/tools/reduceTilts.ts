@@ -17,12 +17,15 @@ export function reduceTilts(
 	remoteTilts: Tilt[][],
 	localTilt: Tilt[],
 	{ tilt, remoteTilt }: Settings,
+	cardCount = 0,
 ): Tilt[] {
 	if (!tilt) return [];
 	if (!remoteTilt) return localTilt;
 
-	return Array.from({ length: 5 }, (_, i) => (localTilt[i] ? [localTilt[i]] : []))
-		.map((cardTilts, cardIndex) => [...remoteTilts[cardIndex], ...cardTilts])
+	const length = Math.max(cardCount, remoteTilts.length, localTilt.length);
+
+	return Array.from({ length }, (_, i) => (localTilt[i] ? [localTilt[i]] : []))
+		.map((cardTilts, cardIndex) => [...(remoteTilts[cardIndex] ?? []), ...cardTilts])
 		.map((cardTilts) => cardTilts.filter(validTilt))
 		.map(combineTilts)
 		.map(({ pX, pY, rX, rY, count }) => ({

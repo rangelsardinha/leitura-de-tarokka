@@ -1,9 +1,9 @@
-const tarokka = game.modules.get('tarokka');
+const leituraDeTarokka = game.modules.get('leitura-de-tarokka');
 
-if (!tarokka?.active) {
-	ui.notifications.error('El módulo Tarokka no está activo. Actívalo en Manage Modules.');
-} else if (!tarokka.api?.open) {
-	ui.notifications.error('Tarokka está activo pero no expuso su API todavía (¿acabas de activarlo? recarga la página).');
+if (!leituraDeTarokka?.active) {
+	ui.notifications.error('O módulo Leitura de Tarokka não está ativo. Ative-o em Gerenciar Módulos.');
+} else if (!leituraDeTarokka.api?.open) {
+	ui.notifications.error('Leitura de Tarokka está ativo, mas ainda não expôs a API. Se você acabou de ativá-lo, recarregue a página.');
 } else {
-	tarokka.api.open();
+	leituraDeTarokka.api.open();
 }

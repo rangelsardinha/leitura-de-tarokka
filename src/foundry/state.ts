@@ -1,8 +1,8 @@
 import TarokkaDeck from '@/lib/TarokkaDeck';
-import { GAME_START, SETTINGS } from '@/constants';
+import { GAME_START, SETTINGS, getReadingSpread } from '@/constants';
 import type { GameState, Settings } from '@/types';
 
-export const MODULE_ID = 'tarokka';
+export const MODULE_ID = 'leitura-de-tarokka';
 const SETTING_KEY = 'gameState';
 const SETTING_FQN = `${MODULE_ID}.${SETTING_KEY}`;
 
@@ -18,7 +18,15 @@ export function registerGameState(): void {
 }
 
 export function getGameState(): GameState {
-	return game.settings.get(MODULE_ID, SETTING_KEY) as GameState;
+	const state = game.settings.get(MODULE_ID, SETTING_KEY) as GameState;
+	return {
+		...GAME_START,
+		...state,
+		settings: {
+			...SETTINGS,
+			...(state?.settings ?? {}),
+		},
+	};
 }
 
 // Foundry replicates world-scope setting changes to every connected client
@@ -48,11 +56,15 @@ async function setGameState(state: GameState): Promise<void> {
 
 export async function startReading(): Promise<void> {
 	assertGM();
+	const state = getGameState();
+	const settings = { ...SETTINGS, ...state.settings };
+	const spread = getReadingSpread(settings.readingSpread, settings.gameSystem);
+
 	await setGameState({
 		started: true,
-		cards: deck.getHand(),
+		cards: deck.getReading(spread.value, spread.positions.length, settings.gameSystem === 'dnd5e'),
 		lastUpdated: Date.now(),
-		settings: { ...SETTINGS },
+		settings,
 	});
 }
 
@@ -71,11 +83,17 @@ export async function redrawCard(cardIndex: number): Promise<void> {
 	assertGM();
 	const state = getGameState();
 	const card = state.cards[cardIndex];
+	const spread = getReadingSpread(state.settings.readingSpread, state.settings.gameSystem);
+	const position = spread.positions[cardIndex];
 
 	if (!card) throw new Error(`Card ${cardIndex} not found`);
 
 	state.cards[cardIndex] =
-		card.suit === 'High Deck' ? deck.drawHigh(state.cards) : deck.drawLow(state.cards);
+		position?.deck === 'high'
+			? deck.drawHigh(state.cards)
+			: position?.deck === 'low'
+				? deck.drawLow(state.cards)
+				: deck.drawAny(state.cards);
 	await setGameState(state);
 }
 

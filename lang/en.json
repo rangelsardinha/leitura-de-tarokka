@@ -1,8 +1,8 @@
 {
-	"TAROKKA.controlName": "Tarokka Reading",
-	"TAROKKA.windowTitle": "Tarokka",
-	"TAROKKA.startReading": "Start Reading",
-	"TAROKKA.newReading": "New Reading",
-	"TAROKKA.noReadingGM": "No reading has been started yet.",
-	"TAROKKA.noReadingPlayer": "The GM hasn't started a Tarokka reading yet."
+	"LEITURA_TAROKKA.controlName": "Tarokka Reading",
+	"LEITURA_TAROKKA.windowTitle": "Tarokka Reading",
+	"LEITURA_TAROKKA.startReading": "Start Reading",
+	"LEITURA_TAROKKA.newReading": "New Reading",
+	"LEITURA_TAROKKA.noReadingGM": "No reading has been started yet.",
+	"LEITURA_TAROKKA.noReadingPlayer": "The GM hasn't started a Tarokka reading yet."
 }

@@ -8,6 +8,8 @@ declare global {
 	const game: any;
 	const Hooks: any;
 	const foundry: any;
+	const ui: any;
+	const JournalEntry: any;
 	function mergeObject<T = Record<string, unknown>>(
 		original: T,
 		other?: Record<string, unknown>,

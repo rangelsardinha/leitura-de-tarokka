@@ -2,6 +2,11 @@ import { useAppContext } from '@/AppContext';
 import type { CardStyle } from '@/types';
 
 const cardStyleOptions: CardStyle[] = ['standard', 'color', 'grayscale'];
+const cardStyleLabels: Record<CardStyle, string> = {
+	standard: 'padrão',
+	color: 'colorido',
+	grayscale: 'tons de cinza',
+};
 
 export default function CardStyle({ className }: { className?: string }) {
 	const { isGM, settings, emitSettings } = useAppContext();
@@ -12,7 +17,7 @@ export default function CardStyle({ className }: { className?: string }) {
 
 	return isGM ? (
 		<fieldset className={`flex flex-col w-full ${className}`}>
-			<div className="text-xs ml-1 mb-1">Card style:</div>
+			<div className="text-xs ml-1 mb-1">Estilo das cartas:</div>
 			<div className="inline-flex overflow-hidden rounded-md w-full">
 				{cardStyleOptions.map((option, index) => (
 					<label
@@ -38,7 +43,7 @@ export default function CardStyle({ className }: { className?: string }) {
 							onChange={() => tuneRadio(option)}
 							className="sr-only"
 						/>
-						{option}
+						{cardStyleLabels[option]}
 					</label>
 				))}
 			</div>

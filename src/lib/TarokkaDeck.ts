@@ -1,6 +1,6 @@
 import { getRandomItems } from '@/tools';
 import cards from '@/constants/tarokkaCards';
-import type { TarokkaCard, TarokkaGameCard } from '@/types';
+import type { ReadingSpread, TarokkaCard, TarokkaGameCard } from '@/types';
 
 export default class TarokkaDeck {
 	private highDeck: TarokkaCard[] = [];
@@ -19,12 +19,25 @@ export default class TarokkaDeck {
 		);
 	}
 
+	getReading(spread: ReadingSpread, cardCount: number, useCurseOfStrahdHand = true): TarokkaGameCard[] {
+		if (spread === 'simple-cross' && useCurseOfStrahdHand) return this.getHand();
+
+		return getRandomItems([...this.commonDeck, ...this.highDeck], cardCount).map((card) => ({
+			...card,
+			flipped: false,
+		}));
+	}
+
 	getLow(): TarokkaGameCard[] {
 		return this.commonDeck.map((card) => ({ ...card, flipped: false }));
 	}
 
 	getHigh(): TarokkaGameCard[] {
 		return this.highDeck.map((card) => ({ ...card, flipped: false }));
+	}
+
+	getAll(): TarokkaGameCard[] {
+		return [...this.commonDeck, ...this.highDeck].map((card) => ({ ...card, flipped: false }));
 	}
 
 	drawLow(exclude: TarokkaGameCard[] = []): TarokkaGameCard {
@@ -45,6 +58,18 @@ export default class TarokkaDeck {
 		return {
 			...getRandomItems(
 				this.highDeck.filter(({ id }) => !excludeIDs.includes(id)),
+				1,
+			)[0],
+			flipped: false,
+		};
+	}
+
+	drawAny(exclude: TarokkaGameCard[] = []): TarokkaGameCard {
+		const excludeIDs = exclude.map(({ id }) => id);
+
+		return {
+			...getRandomItems(
+				[...this.commonDeck, ...this.highDeck].filter(({ id }) => !excludeIDs.includes(id)),
 				1,
 			)[0],
 			flipped: false,

@@ -11,10 +11,12 @@ export default function TiltCard({
 	children,
 	cardIndex,
 	className = '',
+	style,
 }: {
 	children: React.ReactNode;
 	cardIndex: number;
 	className?: string;
+	style?: React.CSSProperties;
 }) {
 	const cardRef = useRef<HTMLDivElement>(null);
 	const [untilt, setUntilt] = useState(false);
@@ -96,6 +98,7 @@ export default function TiltCard({
 	return (
 		<div
 			className={`group ${className}`}
+			style={style}
 			onMouseMove={settings.tilt ? handleMouseMove : undefined}
 			onTouchMove={settings.tilt ? handleTouchMove : undefined}
 			onTouchEnd={handleMouseLeave}

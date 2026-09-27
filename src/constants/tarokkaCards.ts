@@ -1132,4 +1132,916 @@ const tarokkaCards: TarokkaCard[] = [
 	},
 ];
 
-export default tarokkaCards;
+type CardTranslation = Record<string, unknown>;
+
+const ptBRCardTranslations: Record<string, CardTranslation> = {
+	back: {
+		name: 'Verso da Carta',
+		card: 'Verso da carta',
+		aria: 'Verso da carta',
+		description: 'Verso da carta',
+	},
+	swashbuckler: {
+		name: 'Espadachim',
+		card: 'Um de Moedas',
+		aria: 'Moedas 01 Espadachim',
+		description:
+			'Pessoas que gostam de dinheiro, mas abrem mão dele livremente; trapaceiros e malandros simpáticos',
+		prophecy: {
+			dmText: 'O tesouro está na cripta de Endorovich (capítulo 4, área K84, cripta 7).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Vejo o esqueleto de um guerreiro mortal, deitado em uma cama de pedra ladeada por gárgulas.',
+		},
+	},
+	philanthropist: {
+		name: 'Filantropo',
+		card: 'Dois de Moedas',
+		aria: 'Moedas 02 Filantropo',
+		description:
+			'Caridade e generosidade em grande escala; aqueles que usam riqueza para combater o mal e a doença',
+		prophecy: {
+			dmText:
+				'O tesouro está no berçário da Abadia de Santa Markovia (capítulo 8, área S23).',
+			location: 'Vila de Krezk',
+			playerText:
+				'Procurem um lugar onde doença e loucura são criadas. Onde crianças choraram um dia, o tesouro ainda repousa.',
+		},
+	},
+	trader: {
+		name: 'Comerciante',
+		card: 'Três de Moedas',
+		aria: 'Moedas 03 Comerciante',
+		description: 'Comércio; contrabando e mercados clandestinos; trocas justas e equilibradas',
+		prophecy: {
+			dmText:
+				'O tesouro está na oficina do soprador de vidro no Mago dos Vinhos (capítulo 12, área W10).',
+			location: 'O Mago dos Vinhos',
+			playerText: 'Procurem o mago dos vinhos! Em madeira e areia, o tesouro se esconde.',
+		},
+	},
+	merchant: {
+		name: 'Mercador',
+		card: 'Quatro de Moedas',
+		aria: 'Moedas 04 Mercador',
+		description:
+			'Uma mercadoria rara ou oportunidade de negócio; transações comerciais enganosas ou perigosas',
+		prophecy: {
+			dmText: 'O tesouro está na adega do Castelo Ravenloft (capítulo 4, área K63).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Procurem um barril que um dia conteve o melhor vinho, do qual nem uma gota restou.',
+		},
+	},
+	'guild-member': {
+		name: 'Membro de Guilda',
+		card: 'Cinco de Moedas',
+		aria: 'Moedas 05 Membro de Guilda',
+		description:
+			'Indivíduos de ideias semelhantes unidos por um objetivo comum; orgulho no próprio trabalho',
+		prophecy: {
+			dmText: 'O tesouro está na cripta de Artank Swilovich (capítulo 4, área K84, cripta 5).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Vejo uma sala cheia de garrafas. É a tumba de um membro de guilda.',
+		},
+	},
+	beggar: {
+		name: 'Mendigo',
+		card: 'Seis de Moedas',
+		aria: 'Moedas 06 Mendigo',
+		description: 'Mudança súbita de condição econômica ou de fortuna',
+		prophecy: {
+			dmText: 'O tesouro está escondido no casebre de Kasimir (capítulo 5, área N9a).',
+			location: 'Cidade de Vallaki',
+			playerText:
+				'Um elfo ferido tem o que vocês procuram. Ele abrirá mão do tesouro para ver seus sonhos sombrios cumpridos.',
+		},
+	},
+	thief: {
+		name: 'Ladrão',
+		card: 'Sete de Moedas',
+		aria: 'Moedas 07 Ladrão',
+		description:
+			'Aqueles que roubam ou furtam; perda de propriedade, beleza, inocência, amizade ou reputação',
+		prophecy: {
+			dmText:
+				'O tesouro está enterrado no cemitério da encruzilhada do Rio Ivlis (capítulo 2, área F).',
+			location: 'Encruzilhada do Rio Ivlis',
+			playerText:
+				'O que vocês procuram está na encruzilhada entre a vida e a morte, entre os mortos sepultados.',
+		},
+	},
+	'tax-collector': {
+		name: 'Coletor de Impostos',
+		card: 'Oito de Moedas',
+		aria: 'Moedas 08 Coletor de Impostos',
+		description: 'Corrupção; honestidade em um governo ou organização corrupta',
+		prophecy: {
+			dmText:
+				'O tesouro está escondido no vagão de tesouros dos Vistani (capítulo 5, área N9i). "Uma criança desaparecida" refere-se a Arabelle (veja o capítulo 2, área L).',
+			location: 'Cidade de Vallaki',
+			playerText:
+				'Os Vistani têm o que vocês procuram. Uma criança desaparecida guarda a chave para libertar o tesouro.',
+		},
+	},
+	miser: {
+		name: 'Avarento',
+		card: 'Nove de Moedas',
+		aria: 'Moedas 09 Avarento',
+		description:
+			'Riqueza acumulada; aqueles que são irremediavelmente infelizes ou acreditam que dinheiro não tem valor',
+		prophecy: {
+			dmText: 'O tesouro está na tesouraria do Castelo Ravenloft (capítulo 4, área K41).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Procurem uma fortaleza dentro de uma fortaleza, em um lugar oculto atrás do fogo.',
+		},
+	},
+	rogue: {
+		name: 'Ladino',
+		card: 'Mestre de Moedas',
+		aria: 'Moedas 10 Ladino',
+		description:
+			'Qualquer pessoa para quem o dinheiro é importante; aqueles que acreditam que dinheiro é a chave do sucesso',
+		prophecy: {
+			dmText: 'O tesouro está escondido no sótão da Estalagem Água Azul (capítulo 5, área N2q).',
+			location: 'Cidade de Vallaki',
+			playerText: 'Vejo um ninho de corvos. Lá vocês encontrarão o prêmio.',
+		},
+	},
+	monk: {
+		name: 'Monge',
+		card: 'Um de Glifos',
+		aria: 'Glifos 01 Monge',
+		description:
+			'Serenidade; força interior e autossuficiência; confiança suprema sem arrogância',
+		prophecy: {
+			dmText:
+				'O tesouro está no salão principal da Abadia de Santa Markovia (capítulo 8, área S13).',
+			location: 'Vila de Krezk',
+			playerText: 'O tesouro que vocês procuram está escondido atrás do sol, na casa de uma santa.',
+		},
+	},
+	missionary: {
+		name: 'Missionário',
+		card: 'Dois de Glifos',
+		aria: 'Glifos 02 Missionário',
+		description:
+			'Aqueles que espalham sabedoria e fé; alertas sobre a propagação do medo e da ignorância',
+		prophecy: {
+			dmText:
+				'O tesouro está escondido dentro de um dos espantalhos no jardim da Abadia de Santa Markovia (capítulo 8, área S9).',
+			location: 'Vila de Krezk',
+			playerText:
+				'Vejo um jardim polvilhado de neve, vigiado por um espantalho com um sorriso de pano. Não olhem para o jardim, mas para o guardião.',
+		},
+	},
+	healer: {
+		name: 'Curandeiro',
+		card: 'Três de Glifos',
+		aria: 'Glifos 03 Curandeiro',
+		description:
+			'Cura; uma enfermidade contagiosa, doença ou maldição; aqueles que praticam as artes da cura',
+		prophecy: {
+			dmText:
+				'O tesouro está sob o gazebo no Santuário do Sol Branco (capítulo 8, área S4).',
+			location: 'Vila de Krezk',
+			playerText: 'Olhem para o oeste. Encontrem uma piscina abençoada pela luz do sol branco.',
+		},
+	},
+	shepherd: {
+		name: 'Pastor',
+		card: 'Quatro de Glifos',
+		aria: 'Glifos 04 Pastor',
+		description:
+			'Aqueles que protegem os outros; alguém que carrega um fardo pesado demais para suportar sozinho',
+		prophecy: {
+			dmText:
+				'O tesouro está na tumba do Rei Barov e da Rainha Ravenovia (capítulo 4, área K88).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Encontrem a mãe, aquela que deu à luz o mal.',
+		},
+	},
+	druid: {
+		name: 'Druida',
+		card: 'Cinco de Glifos',
+		aria: 'Glifos 05 Druida',
+		description:
+			'A ambivalência e crueldade da natureza e daqueles atraídos por ela; conflito interior',
+		prophecy: {
+			dmText:
+				'O tesouro está na base da árvore Gulthias (capítulo 14, área Y4). Qualquer corvo-lobisomem encontrado na natureza pode guiar os personagens até o local.',
+			location: 'Colina Yester',
+			playerText:
+				'Uma árvore maligna cresce no alto de uma colina de túmulos onde os mortos antigos dormem. Os corvos podem ajudar vocês a encontrá-la. Procurem o tesouro ali.',
+		},
+	},
+	anarchist: {
+		name: 'Anarquista',
+		card: 'Seis de Glifos',
+		aria: 'Glifos 06 Anarquista',
+		description:
+			'Uma mudança fundamental provocada por alguém cujas crenças estão sendo postas à prova',
+		prophecy: {
+			dmText: 'O tesouro está no salão dos ossos do Castelo Ravenloft (capítulo 4, área K67).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Vejo paredes de ossos, um candelabro de ossos e uma mesa de ossos: tudo que resta de inimigos há muito esquecidos.',
+		},
+	},
+	charlatan: {
+		name: 'Charlatão',
+		card: 'Sete de Glifos',
+		aria: 'Glifos 07 Charlatão',
+		description: 'Mentirosos; aqueles que professam uma crença, mas na verdade acreditam em outra',
+		prophecy: {
+			dmText: 'O tesouro está no sótão do Velho Moinho de Ossos (capítulo 6, área O4).',
+			location: 'Velho Moinho de Ossos',
+			playerText: 'Vejo um moinho solitário em um precipício. O tesouro está lá dentro.',
+		},
+	},
+	bishop: {
+		name: 'Bispo',
+		card: 'Oito de Glifos',
+		aria: 'Glifos 08 Bispo',
+		description: 'Apego rígido a um código ou crença; aqueles que conspiram, planejam e tramam',
+		prophecy: {
+			dmText:
+				'O tesouro está na tesouraria selada do Templo de Âmbar (capítulo 13, área X40).',
+			location: 'Templo de Âmbar',
+			playerText: 'O que vocês procuram está em uma pilha de tesouros além de portas de âmbar.',
+		},
+	},
+	traitor: {
+		name: 'Traidor',
+		card: 'Nove de Glifos',
+		aria: 'Glifos 09 Traidor',
+		description: 'Traição por alguém próximo e confiável; enfraquecimento ou perda da fé',
+		prophecy: {
+			dmText:
+				'O tesouro está escondido no quarto principal da Wachterhaus (capítulo 5, área N4o).',
+			location: 'Cidade de Vallaki',
+			playerText:
+				'Procurem uma mulher rica. Aliada ferrenha do demônio, ela guarda o tesouro trancado, junto aos ossos de um antigo inimigo.',
+		},
+	},
+	priest: {
+		name: 'Sacerdote',
+		card: 'Mestre de Glifos',
+		aria: 'Glifos 10 Sacerdote',
+		description:
+			'Iluminação; aqueles que seguem uma divindade, um sistema de valores ou um propósito maior',
+		prophecy: {
+			dmText: 'O tesouro está na capela do Castelo Ravenloft (capítulo 4, área K15).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Vocês encontrarão o que procuram no castelo, entre as ruínas de um lugar de súplica.',
+		},
+	},
+	transmuter: {
+		name: 'Transmutador',
+		card: 'Um de Estrelas',
+		aria: 'Estrelas 01 Transmutador',
+		description:
+			'Uma nova descoberta; a chegada de coisas inesperadas; consequências imprevistas e caos',
+		prophecy: {
+			dmText: 'O tesouro está no topo da torre norte do Castelo Ravenloft (capítulo 4, área K60).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Vão a um lugar de alturas vertiginosas, onde a própria pedra está viva!',
+		},
+	},
+	diviner: {
+		name: 'Adivinho',
+		card: 'Dois de Estrelas',
+		aria: 'Estrelas 02 Adivinho',
+		description: 'A busca por conhecimento temperada pela sabedoria; verdade e honestidade; sábios e profecia',
+		prophecy: {
+			dmText:
+				'O tesouro está no acampamento de Madame Eva (capítulo 2, área G). Se ela estiver fazendo a leitura, diz: "Acho que o tesouro está bem debaixo do meu nariz!"',
+			location: 'Acampamento da Piscina Tser',
+			playerText: 'Olhem para aquela que tudo vê. O tesouro está escondido em seu acampamento.',
+		},
+	},
+	enchanter: {
+		name: 'Encantador',
+		card: 'Três de Estrelas',
+		aria: 'Estrelas 03 Encantador',
+		description: 'Conflito interior causado por confusão, medo do fracasso ou informações falsas',
+		prophecy: {
+			dmText:
+				'O tesouro está sob o monumento de Marina em Berez (capítulo 10, área U5). "O mestre do pântano" refere-se ao burgomestre Lazlo Ulrich (área U2), cujo fantasma pode apontar os personagens até o monumento.',
+			location: 'Ruínas de Berez',
+			playerText:
+				'Vejo uma mulher ajoelhada, uma rosa de grande beleza colhida cedo demais. O mestre do pântano sabe de quem falo.',
+		},
+	},
+	abjurer: {
+		name: 'Abjurador',
+		card: 'Quatro de Estrelas',
+		aria: 'Estrelas 04 Abjurador',
+		description: 'Aqueles guiados pela lógica e pela razão; alerta para uma pista ou informação ignorada',
+		prophecy: {
+			dmText:
+				'O tesouro está no farol de Argynvostholt (capítulo 7, área Q53). "Grande dragão de pedra" refere-se à estátua na área Q1.',
+			location: 'Argynvostholt',
+			playerText:
+				'Vejo uma casa caída guardada por um grande dragão de pedra. Olhem para o pico mais alto.',
+		},
+	},
+	elementalist: {
+		name: 'Elementalista',
+		card: 'Cinco de Estrelas',
+		aria: 'Estrelas 05 Elementalista',
+		description: 'O triunfo da natureza sobre a civilização; desastres naturais e colheitas abundantes',
+		prophecy: {
+			dmText:
+				'O tesouro está dentro de uma maquete do Castelo Ravenloft no Templo de Âmbar (capítulo 13, área X20).',
+			location: 'Templo de Âmbar',
+			playerText:
+				'O tesouro está escondido em um pequeno castelo sob uma montanha, guardado por gigantes de âmbar.',
+		},
+	},
+	evoker: {
+		name: 'Evocador',
+		card: 'Seis de Estrelas',
+		aria: 'Estrelas 06 Evocador',
+		description:
+			'Poder mágico ou sobrenatural que não pode ser controlado; magia usada para fins destrutivos',
+		prophecy: {
+			dmText:
+				'O tesouro está escondido na cripta de Gralmore Nimblenobs (capítulo 4, área K84, cripta 37).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Procurem a cripta do mago ordinário. Seu cajado é a chave.',
+		},
+	},
+	illusionist: {
+		name: 'Ilusionista',
+		card: 'Sete de Estrelas',
+		aria: 'Estrelas 07 Ilusionista',
+		description:
+			'Mentiras e engano; grandes conspirações; sociedades secretas; a presença de um iludido ou sabotador',
+		prophecy: {
+			dmText: 'O tesouro está no vagão de carnaval de Rictavio (capítulo 5, área N5).',
+			location: 'Cidade de Vallaki',
+			playerText:
+				'Um homem não é o que parece. Ele vem aqui em um vagão de carnaval. Ali está o que vocês procuram.',
+		},
+	},
+	necromancer: {
+		name: 'Necromante',
+		card: 'Oito de Estrelas',
+		aria: 'Estrelas 08 Necromante',
+		description: 'Eventos antinaturais e obsessões doentias; aqueles que seguem um caminho destrutivo',
+		prophecy: {
+			dmText: 'O tesouro está no gabinete do Castelo Ravenloft (capítulo 4, área K37).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Uma mulher paira acima de um fogo crepitante. Encontrem-na e encontrarão o tesouro.',
+		},
+	},
+	conjurer: {
+		name: 'Conjurador',
+		card: 'Nove de Estrelas',
+		aria: 'Estrelas 09 Conjurador',
+		description:
+			'A chegada de uma ameaça sobrenatural inesperada; aqueles que pensam ser deuses',
+		prophecy: {
+			dmText: 'O tesouro está na cabana de Baba Lysaga (capítulo 10, área U3).',
+			location: 'Ruínas de Berez',
+			playerText:
+				'Vejo uma vila morta, afogada por um rio, governada por alguém que trouxe grande mal ao mundo.',
+		},
+	},
+	wizard: {
+		name: 'Mago',
+		card: 'Mestre de Estrelas',
+		aria: 'Estrelas 10 Mago',
+		description: 'Mistério e enigmas; o desconhecido; aqueles que desejam poder mágico e grande conhecimento',
+		prophecy: {
+			dmText: 'O tesouro está no último andar da Torre de Van Richten (capítulo 11, área V7).',
+			location: 'Cidade de Vallaki',
+			playerText:
+				'Procurem uma torre de mago em um lago. Deixem que o nome do mago e seu servo guiem vocês até o que procuram.',
+		},
+	},
+	avenger: {
+		name: 'Vingador',
+		card: 'Um de Espadas',
+		aria: 'Espadas 01 Vingador',
+		description:
+			'Justiça e vingança por grandes injustiças; aqueles em uma missão para livrar o mundo de um grande mal',
+		prophecy: {
+			dmText:
+				'O tesouro está em posse de Vladimir Horngaard em Argynvostholt (capítulo 7, área Q36).',
+			location: 'Argynvostholt',
+			playerText: 'O tesouro está na casa de um dragão, em mãos antes limpas e agora corrompidas.',
+		},
+	},
+	paladin: {
+		name: 'Paladino',
+		card: 'Dois de Espadas',
+		aria: 'Espadas 02 Paladino',
+		description: 'Guerreiros justos e nobres; aqueles que vivem por um código de honra e integridade',
+		prophecy: {
+			dmText: 'O tesouro está na tumba de Sergei (capítulo 4, área K85).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Vejo um príncipe adormecido, servo da luz e irmão da escuridão. O tesouro está com ele.',
+		},
+	},
+	soldier: {
+		name: 'Soldado',
+		card: 'Três de Espadas',
+		aria: 'Espadas 03 Soldado',
+		description: 'Guerra e sacrifício; a resistência para suportar grandes dificuldades',
+		prophecy: {
+			dmText:
+				'O tesouro está no telhado da torre de guarda da Passagem de Tsolenka (capítulo 9, área T6).',
+			location: 'Passagem de Tsolenka',
+			playerText: 'Vão às montanhas. Escalem a torre branca guardada por cavaleiros dourados.',
+		},
+	},
+	mercenary: {
+		name: 'Mercenário',
+		card: 'Quatro de Espadas',
+		aria: 'Espadas 04 Mercenário',
+		description: 'Força interior e fortitude; aqueles que lutam por poder ou riqueza',
+		prophecy: {
+			dmText:
+				'O tesouro está em uma cripta no Castelo Ravenloft (capítulo 4, área K84, cripta 31).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Aquilo que vocês procuram está com os mortos, sob montanhas de moedas de ouro.',
+		},
+	},
+	myrmidon: {
+		name: 'Mirmidão',
+		card: 'Cinco de Espadas',
+		aria: 'Espadas 05 Mirmidão',
+		description:
+			'Grandes heróis; uma súbita reversão do destino; o triunfo do azarão sobre um inimigo poderoso',
+		prophecy: {
+			dmText:
+				'O tesouro está no santuário da Mãe Noite, na toca dos lobisomens (capítulo 15, área Z7).',
+			location: 'Toca dos Lobisomens',
+			playerText:
+				'Procurem uma toca de lobos nas colinas que observam um lago de montanha. O tesouro pertence à Mãe Noite.',
+		},
+	},
+	berserker: {
+		name: 'Berserker',
+		card: 'Seis de Espadas',
+		aria: 'Espadas 06 Berserker',
+		description: 'O lado brutal e bárbaro da guerra; sede de sangue; aqueles com natureza bestial',
+		prophecy: {
+			dmText:
+				'O tesouro está na cripta do General Kroval "Cão Louco" Grislek (capítulo 4, área K84, cripta 38).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Encontrem a cripta do Cão Louco. O tesouro está lá dentro, sob os ossos enegrecidos.',
+		},
+	},
+	'hooded-one': {
+		name: 'Encapuzado',
+		card: 'Sete de Espadas',
+		aria: 'Espadas 07 Encapuzado',
+		description: 'Fanatismo, intolerância e xenofobia; uma presença misteriosa ou recém-chegada',
+		prophecy: {
+			dmText:
+				'O tesouro está dentro da cabeça de uma estátua gigante no Templo de Âmbar (capítulo 13, área X5a).',
+			location: 'Templo de Âmbar',
+			playerText:
+				'Vejo um deus sem rosto. Ele espera por vocês no fim de uma estrada longa e sinuosa, nas profundezas das montanhas.',
+		},
+	},
+	dictator: {
+		name: 'Ditador',
+		card: 'Oito de Espadas',
+		aria: 'Espadas 08 Ditador',
+		description:
+			'Tudo que há de errado com governo e liderança; aqueles que governam por medo e violência',
+		prophecy: {
+			dmText: 'O tesouro está no salão de audiências do Castelo Ravenloft (capítulo 4, área K25).',
+			location: 'Castelo Ravenloft',
+			playerText: 'Vejo um trono digno de um rei.',
+		},
+	},
+	torturer: {
+		name: 'Torturador',
+		card: 'Nove de Espadas',
+		aria: 'Espadas 09 Torturador',
+		description: 'A chegada de sofrimento ou crueldade implacável; alguém irredimivelmente mau ou sádico',
+		prophecy: {
+			dmText:
+				'O tesouro está no sótão da mansão do burgomestre em Vallaki (capítulo 5, área N3s).',
+			location: 'Cidade de Vallaki',
+			playerText:
+				'Há uma cidade onde nada vai bem. Lá vocês encontrarão uma casa de corrupção e, dentro dela, uma sala escura cheia de fantasmas imóveis.',
+		},
+	},
+	warrior: {
+		name: 'Guerreiro',
+		card: 'Mestre de Espadas',
+		aria: 'Espadas 10 Guerreiro',
+		description: 'Força personificada; violência; aqueles que usam força para cumprir seus objetivos',
+		prophecy: {
+			dmText: 'O tesouro está na tumba de Strahd (capítulo 4, área K86).',
+			location: 'Castelo Ravenloft',
+			playerText:
+				'Aquilo que vocês procuram está no ventre da escuridão, o "covil" do demônio: o único lugar para onde ele deve retornar.',
+		},
+	},
+	artifact: {
+		name: 'Artefato',
+		card: 'O Artefato',
+		aria: 'Baralho Alto Artefato',
+		description:
+			'A importância de algum objeto físico que deve ser obtido, protegido ou destruído a qualquer custo',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Procurem um homem divertido com um macaco. Esse homem é mais do que parece.',
+					dmText:
+						'Esta carta refere-se a Rictavio (apêndice D), que pode ser encontrado na Estalagem Água Azul, em Vallaki (capítulo 5, área N2). Normalmente relutante em acompanhar os personagens, Rictavio muda de ideia se eles contarem sobre a leitura das cartas. Ele abandona o disfarce e se apresenta como Dr. Rudolf van Richten.\n\nOs personagens podem pensar que Gadof Blinsky, o fabricante de brinquedos de Vallaki (área N7), é a figura que procuram, pois ele tem um macaco de estimação. Se falarem com ele sobre essa possibilidade, Blinsky brinca que ele e o macaco são "velhos amigos"; mas, se os personagens pedirem que ele os acompanhe para lutar contra Strahd, ele recusa educadamente. Se contarem a ele sobre a leitura de tarokka, Blinsky admite que adquiriu o macaco de um mestre de cerimônias meio-elfo chamado Rictavio.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Ele espreita na escuridão onde a luz da manhã um dia brilhou: um lugar sagrado.',
+				dmText: 'Strahd enfrenta os personagens na capela (área K15).',
+			},
+		},
+	},
+	beast: {
+		name: 'Fera',
+		card: 'A Fera',
+		aria: 'Baralho Alto Fera',
+		description:
+			'Grande fúria ou paixão; algo bestial ou malévolo escondido à vista de todos ou logo abaixo da superfície',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Uma lobisomem guarda um ódio secreto por seu inimigo. Usem esse ódio a seu favor.',
+					dmText:
+						'Esta carta refere-se à lobisomem Zuleika Toranescu (capítulo 15, área Z7). Ela acompanhará os personagens se eles prometerem vingar seu companheiro, Emil, matando o líder de sua matilha, Kiril Stoyanovich.',
+				},
+			],
+			strahd: {
+				playerText: 'A fera se senta em seu trono sombrio.',
+				dmText: 'Strahd enfrenta os personagens no salão de audiências (área K25).',
+			},
+		},
+	},
+	'broken-one': {
+		name: 'O Quebrado',
+		card: 'O Quebrado',
+		aria: 'Baralho Alto O Quebrado',
+		description:
+			'Derrota, fracasso e desespero; a perda de algo ou alguém importante, sem o qual a pessoa se sente incompleta',
+		prophecy: {
+			allies: [
+				{
+					ally: 'Mago Louco',
+					playerText:
+						'Seu maior aliado será um mago. Sua mente está quebrada, mas seus feitiços são fortes.',
+					dmText: 'Esta carta refere-se ao Mago Louco do Monte Baratok (capítulo 2, área M).',
+				},
+				{
+					playerText:
+						'Vejo um homem de fé cuja sanidade pende por um fio. Ele perdeu alguém próximo.',
+					dmText:
+						'Esta carta refere-se a Donavich, o sacerdote na vila de Barovia (capítulo 3, área E5). Ele não acompanhará os personagens até que seu filho, Doru, esteja morto e sepultado.',
+				},
+			],
+			strahd: {
+				playerText: 'Ele assombra a tumba do homem que invejou acima de todos.',
+				dmText: 'Strahd enfrenta os personagens na tumba de Sergei (área K86).',
+			},
+		},
+	},
+	darklord: {
+		name: 'Lorde Sombrio',
+		card: 'O Lorde Sombrio',
+		aria: 'Baralho Alto Lorde Sombrio',
+		description:
+			'Um indivíduo único e poderoso de natureza maligna, cujos objetivos têm consequências enormes e abrangentes',
+		prophecy: {
+			allies: [
+				{
+					ally: 'Ninguém',
+					playerText:
+						'Ah, a pior de todas as "verdades": vocês devem enfrentar o mal desta terra sozinhos!',
+					dmText: 'Não há nenhum NPC capaz de inspirar os personagens.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Ele espreita nas profundezas da escuridão, no único lugar para onde deve retornar.',
+				dmText: 'Strahd enfrenta os personagens em sua tumba (área K86).',
+			},
+		},
+	},
+	donjon: {
+		name: 'Masmorra',
+		card: 'A Masmorra',
+		aria: 'Baralho Alto Masmorra',
+		description:
+			'Isolamento e aprisionamento; ser tão conservador no pensamento a ponto de tornar-se prisioneiro das próprias crenças',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Procurem um jovem perturbado cercado por riqueza e loucura. Seu lar é sua prisão.',
+					dmText:
+						'Esta carta refere-se a Victor Vallakovich (capítulo 5, área N3t). Ao perceber que os personagens são a chave para sua salvação, ele deixa a casa com entusiasmo e os acompanha até o Castelo Ravenloft.',
+				},
+				{
+					playerText:
+						'Encontrem uma moça levada à insanidade, trancada no coração da casa de seu pai morto. Curar sua loucura é a chave para o sucesso de vocês.',
+					dmText:
+						'Esta carta refere-se a Stella Wachter (capítulo 5, área N4n). Ela não concede benefício ao grupo a menos que sua loucura seja curada. Com a razão restaurada, Stella fica feliz em juntar-se ao grupo e deixar para trás sua família apodrecida.',
+				},
+			],
+			strahd: {
+				playerText: 'Ele espreita em um salão de ossos, nos poços escuros de seu castelo.',
+				dmText: 'Strahd enfrenta os personagens no salão dos ossos (área K67).',
+			},
+		},
+	},
+	executioner: {
+		name: 'Carrasco',
+		card: 'O Carrasco',
+		aria: 'Baralho Alto Carrasco',
+		description:
+			'A morte iminente de alguém condenado, com ou sem justiça; falsas acusações e perseguição injusta',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Busquem o irmão da noiva do demônio. Chamam-no de "o menor", mas ele tem uma alma poderosa.',
+					dmText:
+						'Esta carta refere-se a Ismark Kolyanovich (capítulo 3, área E2). Ismark não acompanhará os personagens ao Castelo Ravenloft até saber que sua irmã, Ireena Kolyana, está segura.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Vejo uma figura sombria em uma sacada, olhando para esta terra torturada com um sorriso retorcido.',
+				dmText: 'Strahd enfrenta os personagens no mirante (área K6).',
+			},
+		},
+	},
+	ghost: {
+		name: 'Fantasma',
+		card: 'O Fantasma',
+		aria: 'Baralho Alto Fantasma',
+		description:
+			'O passado iminente; o retorno de um antigo inimigo ou a descoberta de um segredo enterrado há muito tempo',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Vejo um paladino caído de uma ordem caída de cavaleiros. Ele permanece como um fantasma no covil de um dragão morto.',
+					dmText:
+						'Esta carta refere-se ao revenante Sir Godfrey Gwilym (capítulo 7, área Q37). Embora inicialmente não queira acompanhar os personagens, ele o fará se eles o convencerem de que a honra da Ordem do Dragão Prateado pode ser restaurada com sua ajuda. Para isso, é necessário um teste bem-sucedido de Carisma (Persuasão) CD 15.',
+				},
+				{
+					playerText:
+						'Despertem o espírito do cavaleiro desajeitado cuja cripta repousa nas profundezas do castelo.',
+					dmText:
+						'Esta carta refere-se a Sir Klutz, o guerreiro fantasma (capítulo 4, área K84, cripta 33). Se Sir Klutz for o inimigo de Strahd, o guerreiro fantasma não desaparece após sete dias, mas somente depois que ele ou Strahd for reduzido a 0 pontos de vida.',
+				},
+			],
+			strahd: {
+				playerText: 'Olhem para a tumba do pai.',
+				dmText:
+					'Strahd enfrenta os personagens na tumba do Rei Barov e da Rainha Ravenovia (área K88).',
+			},
+		},
+	},
+	horseman: {
+		name: 'Cavaleiro',
+		card: 'O Cavaleiro',
+		aria: 'Baralho Alto Cavaleiro',
+		description:
+			'Morte; desastre na forma de perda de riqueza ou propriedade, derrota terrível ou fim de uma linhagem',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Vejo um homem morto de nascimento nobre, guardado por sua viúva. Devolvam vida ao cadáver desse homem, e ele será seu aliado leal.',
+					dmText:
+						'Esta carta refere-se a Nikolai Wachter, o velho, que está morto (capítulo 5, área N4o). Se os personagens conjurarem reviver os mortos ou ressurreição em seu corpo preservado, Nikolai (nobre humano masculino LN) concorda em ajudá-los assim que se sentir bem o bastante, apesar dos protestos de sua esposa. Embora sua família tenha apoiado Strahd por muito tempo, Nikolai percebeu no fim da vida que Strahd deve ser destruído para salvar Barovia.\n\nSe os personagens não tiverem meios para trazer Nikolai de volta dos mortos, Rictavio (apêndice D) entrega a eles um pergaminho de reviver os mortos se souber da necessidade. Se estiverem hospedados na Estalagem Água Azul, ele deixa o pergaminho em um dos quartos.',
+				},
+				{
+					playerText:
+						'Um homem da morte chamado Arrigal abandonará seu senhor sombrio para servir à causa de vocês. Cuidado! Ele tem uma alma podre.',
+					dmText:
+						'Esta carta refere-se ao assassino Vistani Arrigal (capítulo 5, área N9c). Se os personagens mencionarem a leitura a ele, ele aceita seu destino e os acompanha. Se os personagens conseguirem derrotar Strahd, Arrigal os trai e ataca, acreditando estar destinado a se tornar o novo senhor de Barovia.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Ele espreita no único lugar para onde deve retornar: um lugar de morte.',
+				dmText: 'Strahd enfrenta os personagens em sua tumba (área K86).',
+			},
+		},
+	},
+	innocent: {
+		name: 'Inocente',
+		card: 'O Inocente',
+		aria: 'Baralho Alto Inocente',
+		description:
+			'Um ser de grande importância cuja vida está em perigo, talvez indefeso ou simplesmente inconsciente do risco',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Vejo um jovem de coração bondoso. Um menino da mamãe! Ele é forte de corpo, mas fraco de mente. Procurem-no na vila de Barovia.',
+					dmText:
+						'Esta carta refere-se a Parriwimple (veja o capítulo 3, área E1). Embora seja simplório, ele não viajará ao Castelo Ravenloft sem uma boa razão. Os personagens podem manipulá-lo a ir, apelando para seu bom coração. Por exemplo, ele pode ir para ajudar a resgatar barovianos desaparecidos ou salvar a vida de Ireena Kolyana, que é muito bela. Os personagens precisam lidar de alguma forma com Bildrath, empregador de Parriwimple, que não permitirá que o rapaz tolo vá ao castelo por motivo algum.',
+				},
+				{
+					playerText: 'A noiva do mal é quem vocês procuram!',
+					dmText:
+						'Esta carta refere-se a Ireena Kolyana (capítulo 3, área E4). Seu irmão Ismark se opõe à ideia de Ireena ser levada ao Castelo Ravenloft, mas insiste em ir para lá quando os personagens contam a ela sobre a leitura das cartas. Ireena, porém, não acompanhará os personagens até que o corpo de Kolyan Indirovich seja sepultado no cemitério.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Ele habita junto daquele cujo sangue selou sua ruína, um irmão de luz apagado cedo demais.',
+				dmText: 'Strahd enfrenta os personagens na tumba de Sergei (área K85).',
+			},
+		},
+	},
+	marionette: {
+		name: 'Marionete',
+		card: 'A Marionete',
+		aria: 'Baralho Alto Marionete',
+		description:
+			'A presença de um espião ou servo de um poder maior; um encontro com uma marionete ou subordinado',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Que horror é este? Vejo um homem feito por um homem. Sem idade e sozinho, ele assombra as torres do castelo.',
+					dmText: 'Esta carta refere-se a Pidlwick II (capítulo 4, área K59 e apêndice D).',
+				},
+				{
+					playerText:
+						'Procurem um homem de música, um homem com duas cabeças. Ele vive em um lugar de grande fome e tristeza.',
+					dmText:
+						'Esta carta refere-se a Cloven Belview (capítulo 8, área S17), o povo-mestiço de duas cabeças. Clovin serve ao Abade por medo e por um senso perverso de lealdade. Seu trabalho é levar comida aos outros povo-mestiços, que ele detesta. Se o Abade ainda vive, Clovin não quer atrair a ira do mestre tentando partir e se recusa a acompanhar os personagens. Mas, se o Abade morrer, Clovin não tem motivo para permanecer na abadia, então se dispõe a ir junto se for subornado com vinho. Clovin não concede benefício ao grupo sem sua viola.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Olhem para grandes alturas. Encontrem o coração pulsante do castelo. Ele espera por perto.',
+				dmText: 'Strahd enfrenta os personagens no topo da torre norte (área K60).',
+			},
+		},
+	},
+	mists: {
+		name: 'Brumas',
+		card: 'As Brumas',
+		aria: 'Baralho Alto Brumas',
+		description:
+			'Algo inesperado ou misterioso que não pode ser evitado; uma grande missão ou jornada que testará o espírito',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Uma vistana vaga sozinha por esta terra, procurando seu mentor. Ela não permanece muito tempo em um só lugar. Procurem-na na Abadia de Santa Markovia, perto das brumas.',
+					dmText:
+						'Esta carta refere-se a Ezmerelda d’Avenir (apêndice D). Ela pode ser encontrada na Abadia de Santa Markovia (veja o capítulo 8, área S19), bem como em vários outros locais por toda Barovia.',
+				},
+			],
+			strahd: {
+				playerText: 'As cartas não conseguem ver onde o mal espreita. As brumas ocultam tudo.',
+				dmText:
+					'Esta carta não oferece pista sobre onde ocorrerá o confronto final com Strahd. Ele pode acontecer em qualquer lugar que você quiser no Castelo Ravenloft. Alternativamente, Madame Eva diz aos personagens que retornem a ela depois de pelo menos três dias, e ela consultará as cartas novamente para eles, mas apenas para discernir o local de seu inimigo.',
+			},
+		},
+	},
+	raven: {
+		name: 'Corvo',
+		card: 'O Corvo',
+		aria: 'Baralho Alto Corvo',
+		description:
+			'Uma fonte oculta de informação; uma reviravolta afortunada; um potencial secreto para o bem',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Encontrem o líder dos emplumados que vivem entre as vinhas. Embora velho, ele ainda tem uma última luta dentro de si.',
+					dmText:
+						'Esta carta refere-se a Davian Martikov (capítulo 12, "O Mago dos Vinhos"). O velho corvo-lobisomem, percebendo que tem uma chance de acabar com a tirania de Strahd, deixa sua vinha e vinícola nas mãos competentes de seus filhos, Adrian e Elvir. Mas antes de viajar ao Castelo Ravenloft para enfrentar Strahd, Davian insiste em reconciliar-se com seu terceiro filho, Urwin Martikov (capítulo 5, área N2).',
+				},
+			],
+			strahd: {
+				playerText: 'Olhem para a tumba da mãe.',
+				dmText:
+					'Strahd enfrenta os personagens na tumba do Rei Barov e da Rainha Ravenovia (área K88).',
+			},
+		},
+	},
+	seer: {
+		name: 'Vidente',
+		card: 'O Vidente',
+		aria: 'Baralho Alto Vidente',
+		description:
+			'Inspiração e intelecto aguçado; um evento futuro cujo resultado dependerá de uma mente astuta',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Procurem um elfo do crepúsculo que vive entre os Vistani. Ele sofreu uma grande perda e é assombrado por sonhos sombrios. Ajudem-no, e ele ajudará vocês em troca.',
+					dmText:
+						'Esta carta refere-se a Kasimir Velikov (capítulo 5, área N9a). O elfo do crepúsculo acompanha os personagens até o Castelo Ravenloft somente depois que eles o conduzirem ao Templo de Âmbar e encontrarem um meio de ressuscitar sua irmã morta, Patrina Velikovna.',
+				},
+			],
+			strahd: {
+				playerText:
+					'Ele espera por vocês em um lugar de sabedoria, calor e desespero. Grandes segredos repousam ali.',
+				dmText: 'Strahd enfrenta os personagens no gabinete (área K37).',
+			},
+		},
+	},
+	tempter: {
+		name: 'Tentador',
+		card: 'O Tentador',
+		aria: 'Baralho Alto Tentador',
+		description:
+			'Alguém comprometido ou desviado por tentação ou tolice; alguém que tenta outros para fins malignos',
+		prophecy: {
+			allies: [
+				{
+					playerText:
+						'Vejo uma criança, uma Vistana. Vocês devem se apressar, pois seu destino está por um fio. Encontrem-na no lago!',
+					dmText:
+						'Esta carta refere-se a Arabelle (capítulo 2, área L). Ela se junta ao grupo com prazer. Mas, se voltar ao acampamento (capítulo 5, área N9), seu pai, Luvash, se recusará a deixá-la partir.',
+				},
+				{
+					playerText:
+						'Ouço um sino de casamento, ou talvez um dobre fúnebre. Ele chama vocês para uma abadia na encosta da montanha, onde encontrarão uma mulher que é mais do que a soma de suas partes.',
+					dmText: 'Esta carta refere-se a Vasilka, a golem de carne (capítulo 8, área S13).',
+				},
+			],
+			strahd: {
+				playerText:
+					'Vejo um lugar secreto: uma câmara de tentação escondida atrás de uma mulher de grande beleza. O mal espera no alto de sua torre de tesouro.',
+				dmText:
+					'Strahd confronta os personagens na tesouraria (área K41). "Uma mulher de grande beleza" refere-se ao retrato de Tatyana pendurado no gabinete do castelo (área K37), que contém uma porta secreta levando à tesouraria.',
+			},
+		},
+	},
+};
+
+function mergeProphecy(card: TarokkaCard, prophecy: unknown) {
+	if (!prophecy || !('prophecy' in card)) return card;
+
+	const typedProphecy = prophecy as {
+		allies?: Record<string, string>[];
+		strahd?: Record<string, string>;
+		[key: string]: unknown;
+	};
+
+	if ('allies' in card.prophecy) {
+		return {
+			...card,
+			prophecy: {
+				...card.prophecy,
+				allies: card.prophecy.allies.map((ally, index) => ({
+					...ally,
+					...(typedProphecy.allies?.[index] ?? {}),
+				})),
+				strahd: {
+					...card.prophecy.strahd,
+					...(typedProphecy.strahd ?? {}),
+				},
+			},
+		} as TarokkaCard;
+	}
+
+	return {
+		...card,
+		prophecy: {
+			...card.prophecy,
+			...typedProphecy,
+		},
+	} as TarokkaCard;
+}
+
+const translatedTarokkaCards = tarokkaCards.map((card) => {
+	const translation = ptBRCardTranslations[card.id];
+	if (!translation) return card;
+
+	const { prophecy, ...baseTranslation } = translation;
+	const translatedCard = {
+		...card,
+		...baseTranslation,
+	} as TarokkaCard;
+
+	return mergeProphecy(translatedCard, prophecy);
+});
+
+export default translatedTarokkaCards;

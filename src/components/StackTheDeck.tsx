@@ -23,9 +23,9 @@ export default function StackTheDeck({
 			className={`absolute top-0.5 right-0.5 flex flex-col items-center justify-center gap-0.5 bg-black/40 rounded-md p-0.5 ${className}`}
 		>
 			<button
-				onMouseEnter={() => onHover(<p className="text-yellow-400">Redraw</p>)}
+				onMouseEnter={() => onHover(<p className="text-yellow-400">Comprar novamente</p>)}
 				onMouseLeave={() => onHover(null)}
-				onTouchStart={() => onHover(<p className="text-yellow-400">Redraw</p>)}
+				onTouchStart={() => onHover(<p className="text-yellow-400">Comprar novamente</p>)}
 				onTouchEnd={() => onHover(null)}
 				className={`transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
 				onClick={curryHandleClick(onRedraw)}
@@ -34,9 +34,9 @@ export default function StackTheDeck({
 			</button>
 
 			<button
-				onMouseEnter={() => onHover(<p className="text-yellow-400">Select</p>)}
+				onMouseEnter={() => onHover(<p className="text-yellow-400">Escolher</p>)}
 				onMouseLeave={() => onHover(null)}
-				onTouchStart={() => onHover(<p className="text-yellow-400">Select</p>)}
+				onTouchStart={() => onHover(<p className="text-yellow-400">Escolher</p>)}
 				onTouchEnd={() => onHover(null)}
 				className={`transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
 				onClick={curryHandleClick(onSelect)}

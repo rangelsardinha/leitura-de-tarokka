@@ -9,7 +9,15 @@ import {
 	startReading as startReadingAction,
 	updateSettings,
 } from '@/foundry/state';
-import { emitTilt, emitTiltClear, onRemoteTilt, onRemoteTiltClear } from '@/foundry/socket';
+import { saveReadingToJournal } from '@/foundry/journal';
+import {
+	emitShowCardImage,
+	emitTilt,
+	emitTiltClear,
+	onRemoteTilt,
+	onRemoteTiltClear,
+	onShowCardImage,
+} from '@/foundry/socket';
 import { reduceTilts } from '@/tools';
 
 import { GAME_START, LOCAL_DEFAULTS } from '@/constants';
@@ -24,24 +32,29 @@ export interface AppContext {
 	selectCardIndex: number;
 	settings: Settings;
 	tilts: Tilt[];
+	showCardImageIndex: number | null;
 	emitFlip: (cardIndex: number) => void;
+	emitShowCardImage: (cardIndex: number) => void;
+	emitSaveReading: () => void;
 	emitSettings: (settings: Partial<Settings>) => void;
 	emitRedraw: (cardIndex: number) => void;
 	emitSelect: (cardID: string) => void;
 	emitStartReading: () => void;
 	setLocalSettings: Dispatch<SetStateAction<LocalSettings>>;
+	setShowCardImageIndex: Dispatch<SetStateAction<number | null>>;
 	setSelectCardIndex: (cardIndex: number) => void;
 	setLocalTilt: (tilt: Tilt[]) => void;
 }
 
-const emptyTilts = (): Tilt[][] => Array.from({ length: 5 }, () => []);
+const emptyTilts = (cardCount = 0): Tilt[][] => Array.from({ length: cardCount }, () => []);
 
 export function AppProvider({ children }: { children: ReactNode }) {
 	const [gameData, setGameData] = useState<GameState>({ ...GAME_START });
 	const [localSettings, setLocalSettings] = useState<LocalSettings>(() => ({ ...LOCAL_DEFAULTS }));
 	const [selectCardIndex, setSelectCardIndex] = useState(-1);
+	const [showCardImageIndex, setShowCardImageIndex] = useState<number | null>(null);
 	const [localTilt, setLocalTilt] = useState<Tilt[]>([]);
-	const [remoteTilts, setRemoteTilts] = useState<Tilt[][]>(emptyTilts);
+	const [remoteTilts, setRemoteTilts] = useState<Tilt[][]>(() => emptyTilts());
 	const remoteTiltsByUser = useRef<Map<string, { cardIndex: number; tilt: Tilt }>>(new Map());
 
 	// Persisted game state: Foundry replicates world-setting changes to every
@@ -52,12 +65,21 @@ export function AppProvider({ children }: { children: ReactNode }) {
 		return onGameStateChange(setGameData);
 	}, []);
 
+	useEffect(() => {
+		setLocalTilt([]);
+		setRemoteTilts(emptyTilts(gameData.cards.length));
+		remoteTiltsByUser.current.clear();
+		setSelectCardIndex(-1);
+		setShowCardImageIndex(null);
+	}, [gameData.cards.length]);
+
 	// Ephemeral tilt state broadcast by other connected users.
 	useEffect(() => {
 		const recompute = () => {
-			const next = emptyTilts();
+			const next = emptyTilts(gameData.cards.length);
 
 			remoteTiltsByUser.current.forEach(({ cardIndex, tilt }, userId) => {
+				if (!next[cardIndex]) return;
 				next[cardIndex] = [...next[cardIndex], { ...tilt, playerID: userId }];
 			});
 
@@ -78,6 +100,14 @@ export function AppProvider({ children }: { children: ReactNode }) {
 			onRemoteTilt(null);
 			onRemoteTiltClear(null);
 		};
+	}, [gameData.cards.length]);
+
+	useEffect(() => {
+		onShowCardImage((cardIndex) => {
+			setShowCardImageIndex(cardIndex);
+		});
+
+		return () => onShowCardImage(null);
 	}, []);
 
 	// Broadcast this client's own tilt to everyone else, matching the original
@@ -98,7 +128,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 		const cardIndex = selectCardIndex;
 		setSelectCardIndex(-1);
 
-		selectCard(cardIndex, cardID).catch((err) => console.error('Tarokka | select error:', err));
+		selectCard(cardIndex, cardID).catch((err) => console.error('Leitura de Tarokka | select error:', err));
 	};
 
 	const isGM = !!game.user?.isGM;
@@ -109,21 +139,33 @@ export function AppProvider({ children }: { children: ReactNode }) {
 		isGM,
 		selectCardIndex,
 		settings,
-		tilts: reduceTilts(remoteTilts, localTilt, settings),
+		tilts: reduceTilts(remoteTilts, localTilt, settings, gameData.cards.length),
+		showCardImageIndex,
 		emitFlip: (cardIndex) => {
-			flipCard(cardIndex).catch((err) => console.error('Tarokka | flip error:', err));
+			flipCard(cardIndex).catch((err) => console.error('Leitura de Tarokka | flip error:', err));
+		},
+		emitShowCardImage: (cardIndex) => {
+			setShowCardImageIndex(cardIndex);
+			emitShowCardImage(cardIndex);
+		},
+		emitSaveReading: () => {
+			saveReadingToJournal(gameData, settings).catch((err) => {
+				console.error('Leitura de Tarokka | save journal error:', err);
+				ui.notifications?.error?.('Não foi possível salvar a leitura no Diário.');
+			});
 		},
 		emitSettings: (settings) => {
-			updateSettings(settings).catch((err) => console.error('Tarokka | settings error:', err));
+			updateSettings(settings).catch((err) => console.error('Leitura de Tarokka | settings error:', err));
 		},
 		emitRedraw: (cardIndex) => {
-			redrawCard(cardIndex).catch((err) => console.error('Tarokka | redraw error:', err));
+			redrawCard(cardIndex).catch((err) => console.error('Leitura de Tarokka | redraw error:', err));
 		},
 		emitSelect: handleSelect,
 		emitStartReading: () => {
-			startReadingAction().catch((err) => console.error('Tarokka | start reading error:', err));
+			startReadingAction().catch((err) => console.error('Leitura de Tarokka | start reading error:', err));
 		},
 		setLocalSettings,
+		setShowCardImageIndex,
 		setSelectCardIndex,
 		setLocalTilt,
 	};

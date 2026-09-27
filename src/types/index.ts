@@ -1,9 +1,19 @@
 export type CardStyle = 'standard' | 'color' | 'grayscale';
+export type GameSystem = 'dnd5e' | 'adnd12' | 'dnd35' | 'old-dragon-2';
+export type ReadingSpread =
+	| 'simple'
+	| 'simple-cross'
+	| 'extended-cross'
+	| 'tower'
+	| 'pyramid'
+	| 'i6-castle-ravenloft';
 
 // all = both + back
 export type Deck = 'high' | 'common' | 'both' | 'back' | 'all';
 
 export interface Settings {
+	gameSystem: GameSystem;
+	readingSpread: ReadingSpread;
 	cardStyle: CardStyle;
 	notes: boolean;
 	positionBack: boolean;
@@ -83,6 +93,20 @@ export interface Layout {
 	deck: string;
 	name: string;
 	text: string;
+	x: number;
+	y: number;
+}
+
+export interface ReadingSpreadConfig {
+	value: ReadingSpread;
+	label: string;
+	description: string;
+	columns: number;
+	rows: number;
+	cardHeight?: string;
+	cardWidth?: string;
+	gapClassName?: string;
+	positions: Layout[];
 }
 
 export interface Tilt {

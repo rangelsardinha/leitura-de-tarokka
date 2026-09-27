@@ -1,97 +1,61 @@
-# 🃏 Tarokka
+# Leitura de Tarokka
 
-A real-time Tarokka card reading module for **FoundryVTT**, for use with
-_Dungeons & Dragons: Curse of Strahd_. It simulates Madam Eva's fortune-telling,
-revealing a hero's fate and Strahd's secrets, with live sync between the GM and
-every connected player.
+Modulo de leitura de Tarokka para **Foundry VTT**, criado como fork independente do modulo original **Tarokka** para que os dois possam ser instalados lado a lado sem conflito.
 
-Ported from the standalone web app at
-[github.com/mcdoh/tarokka](https://github.com/mcdoh/tarokka) into a native
-Foundry module. Instead of the original's DM/spectator share links (built for
-a public website with no accounts), this module uses one shared reading per
-Foundry world: the GM controls it, and every connected player sees the same
-table live, using Foundry's own GM/Player roles.
+Este fork usa o ID `leitura-de-tarokka` e adiciona suporte a leituras e textos para varios sistemas, incluindo D&D 5e/5.5, AD&D 1e/2e, D&D 3.5 e Old Dragon 2.
 
-**Compatibility:** FoundryVTT v13 and v14 (verified), v12 minimum.
+## Instalacao
 
-## Installation
+No Foundry, va em **Add-on Modules -> Install Module** e cole este manifesto:
 
-In Foundry, go to **Add-on Modules → Install Module**, and paste this manifest
-URL into the bottom field:
-
-```
-https://github.com/gmredvelvet-rgb/tarokka-foundryvtt/releases/latest/download/module.json
+```text
+https://github.com/rangelsardinha/leitura-de-tarokka/releases/latest/download/module.json
 ```
 
-Then enable **Tarokka** in your world's module settings. You can also download
-`module.zip` from the [latest release](https://github.com/gmredvelvet-rgb/tarokka-foundryvtt/releases/latest)
-and extract it into your `Data/modules/tarokka` folder manually.
+Depois habilite **Leitura de Tarokka** nas configuracoes de modulos do mundo.
 
-## Licensing
+Tambem e possivel baixar o arquivo `module.zip` na [ultima release](https://github.com/rangelsardinha/leitura-de-tarokka/releases/latest) e extrair manualmente em:
 
-**This module is free.** It needs no subscription, no activation and no account, and it keeps working offline and forever — unlike the subscription-based modules in the Velvet range, it contains no licence check of any kind.
-
-## Support
-
-If this module is useful at your table, you can support development here — welcome, but never required:
-
-- ☕ [Ko-fi](https://ko-fi.com/thegmstudio)
-- ❤️ [Patreon](https://patreon.com/gmredvelvet)
-
-## Features
-
-- 🔮 Faithful to the Tarokka deck: all cards and positions used by Madam Eva's reading
-  - 💬 Dynamic prophecy text based on card and position
-  - 🎨 Three card styles (color, grayscale, standard playing cards)
-- 🧙 GM and Player views
-  - ⚙️ GM can toggle what information players see (card purpose, prophecy, notes)
-  - 🃏 Every action (flipping cards, redrawing, settings changes) is broadcast live
-- 🖱️ Real-time 3D tilt effect on hover/touch, shared between connected clients
-- 📓 Auto-generated notes panel once the full reading is revealed
-
-## Usage
-
-1. Enable the **Tarokka** module in your world.
-2. Click the new Tarokka icon in the scene controls toolbar (left-hand side)
-   to open the reading window. It's available to the GM and to players.
-3. As the GM, click **Start Reading** to deal the five cards.
-4. Click a card to flip it. Hover the top-right corner of a face-down card for
-   **Redraw** (draw a new random card of the same deck) or **Select** (pick a
-   specific card).
-5. Open the gear icon for card style, and to control what players can see.
-
-If the toolbar button doesn't appear for any reason, open the browser console
-and run:
-
-```js
-game.modules.get('tarokka').api.open();
+```text
+Data/modules/leitura-de-tarokka
 ```
 
-or wire that same call up to a macro.
+## Recursos
 
-## Development
+- Modulo independente do Tarokka original, com ID proprio.
+- Sincronizacao ao vivo entre Mestre e jogadores.
+- Selecao de sistema: D&D 5e/5.5, AD&D 1e/2e, D&D 3.5 e Old Dragon 2.
+- Tiragens simples, cruz simples, cruz estendida, torre, piramide e I6: Castelo Ravenloft quando aplicavel.
+- Textos de cartas e posicoes adaptados por sistema.
+- Baralhos especificos para D&D 3.5 e Old Dragon 2.
+- Imagens traduzidas em portugues para os baralhos colorido e tons de cinza.
+- Botao para salvar a leitura em nota de Diario, separando informacoes publicas e do Mestre.
+- Pre-visualizacao ampliada de cartas e exibicao de imagem aos jogadores pelo Mestre.
 
-This module's UI is a bundled React app (kept close to the original app's
-components for visual/behavioral fidelity), built with Vite. The `dist/`
-output is committed to the repo since Foundry loads it directly — you don't
-need Node.js installed just to use the module.
+## Creditos
 
-To make changes:
+Agradecimento especial a **GM RedVelvet**, autor do modulo original **Tarokka** para Foundry VTT:
+
+https://github.com/gmredvelvet-rgb/tarokka-foundryvtt
+
+Este fork tambem preserva os creditos ao projeto web original de **mcdoh**, que serviu de base para o modulo Foundry:
+
+https://github.com/mcdoh/tarokka
+
+## Licenca
+
+Este projeto mantem a licenca MIT do projeto original. Consulte `LICENSE`.
+
+## Desenvolvimento
+
+O codigo-fonte fica na raiz do projeto, com interface React empacotada por Vite. O Foundry carrega diretamente os arquivos em `dist/`.
 
 ```bash
 npm install
-npm run build   # outputs dist/tarokka.js + dist/tarokka.css
+npm run build
 ```
 
-### Architecture notes
+Para publicar uma release instalavel no Foundry, anexe estes arquivos ao release do GitHub:
 
-- The dealt hand + GM-configurable settings (`cardStyle`, `notes`,
-  `positionFront`/`positionBack`, `prophecy`, `tilt`, `remoteTilt`) live in a
-  world-scope Foundry setting (`tarokka.gameState`). Only the GM can write to
-  it, and Foundry replicates changes to every connected client automatically —
-  see `src/foundry/state.ts`.
-- The 3D tilt effect is per-player and not persisted, so it's broadcast over
-  Foundry's module socket channel instead (`module.tarokka`) — see
-  `src/foundry/socket.ts`.
-- `src/TarokkaApplication.tsx` mounts the React app inside a classic Foundry
-  `Application` window via `ReactDOM.createRoot()`.
+- `module.json`
+- `module.zip`
