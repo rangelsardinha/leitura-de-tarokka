@@ -23,11 +23,11 @@ export default function GameSystem({ className }: { className?: string }) {
 
 	return (
 		<label className={`flex flex-col w-full ${className}`}>
-			<span className="text-xs ml-1 mb-1">Sistema:</span>
+			<span className="text-xs ml-1 mb-1 font-semibold text-amber-300">Sistema:</span>
 			<select
 				value={settings.gameSystem}
 				onChange={handleChange}
-				className="w-full rounded-md border border-yellow-500 bg-slate-800 px-3 py-2 text-xs font-medium text-yellow-400 transition hover:bg-slate-700 hover:text-yellow-300"
+				className="h-10 min-h-10 w-full rounded-md border border-amber-400 bg-slate-900 px-3 py-2 text-sm font-semibold leading-5 text-slate-100 transition hover:border-amber-200 hover:bg-slate-800 hover:text-white focus:border-amber-200 focus:outline-none"
 			>
 				{GAME_SYSTEMS.map(({ value, label }) => (
 					<option key={value} value={value}>

@@ -1,4 +1,4 @@
-import { useRef, useState, ReactNode } from 'react';
+import { useLayoutEffect, useRef, useState, ReactNode } from 'react';
 
 type TooltipProps = {
 	children: ReactNode;
@@ -22,6 +22,7 @@ export default function Tooltip({
 	className,
 }: TooltipProps) {
 	const ttRef = useRef<HTMLDivElement | null>(null);
+	const anchorRef = useRef<HTMLDivElement | null>(null);
 	const [show, setShow] = useState(false);
 	const [pos, setPos] = useState({ x: 0, y: 0 });
 	const delayTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -36,20 +37,35 @@ export default function Tooltip({
 		setShow(false);
 	};
 
-	const handleMouseMove = (e: React.MouseEvent) => {
-		const { clientX: x, clientY: y } = e;
-		const ttWidth = ttRef.current?.offsetWidth || 0;
-		const ttHeight = ttRef.current?.offsetHeight || 0;
-		const viewportWidth = window.innerWidth - edgeBuffer;
-		const viewportHeight = window.innerHeight - edgeBuffer;
-		const ttRight = ttWidth + offsetX + x;
-		const ttBottom = ttHeight + offsetY + y;
+	const positionTooltip = () => {
+		const anchor = anchorRef.current;
+		const tooltip = ttRef.current;
+		if (!anchor || !tooltip) return;
 
-		const adjustX = ttRight > viewportWidth ? ttRight - viewportWidth : 0;
-		const adjustY = ttBottom > viewportHeight ? ttBottom - viewportHeight : 0;
+		const anchorRect = anchor.getBoundingClientRect();
+		const tooltipWidth = tooltip.offsetWidth;
+		const tooltipHeight = tooltip.offsetHeight;
+		const minX = edgeBuffer + tooltipWidth / 2;
+		const maxX = window.innerWidth - edgeBuffer - tooltipWidth / 2;
+		const x = Math.max(minX, Math.min(anchorRect.left + anchorRect.width / 2, maxX));
 
-		setPos({ x: x - adjustX, y: y - adjustY });
+		// Keep the tooltip above the card. The top edge is clamped only when the
+		// card is too close to the top of the viewport to fit the full tooltip.
+		const y = Math.max(edgeBuffer, anchorRect.top - tooltipHeight - offsetY);
+		setPos({ x, y });
 	};
+
+	useLayoutEffect(() => {
+		if (!show) return;
+		positionTooltip();
+
+		window.addEventListener('resize', positionTooltip);
+		window.addEventListener('scroll', positionTooltip, true);
+		return () => {
+			window.removeEventListener('resize', positionTooltip);
+			window.removeEventListener('scroll', positionTooltip, true);
+		};
+	}, [show, content]);
 
 	const handleTouchStart = () => {
 		longPressTimeout.current = setTimeout(() => setShow(true), mobileDelay);
@@ -63,9 +79,9 @@ export default function Tooltip({
 	return (
 		<>
 			<div
+				ref={anchorRef}
 				onMouseEnter={handleMouseEnter}
 				onMouseLeave={handleMouseLeave}
-				onMouseMove={handleMouseMove}
 				onTouchStart={handleTouchStart}
 				onTouchEnd={handleTouchEnd}
 				className={className}
@@ -74,10 +90,11 @@ export default function Tooltip({
 			</div>
 			<div
 				ref={ttRef}
-				className={`fixed max-w-[35vh] pointer-events-none z-50 text-xs bg-[#1e293b] rounded-lg border border-yellow-500 px-2 py-1 transition-opacity duration-250 ${content && show ? 'opacity-100' : 'opacity-0'}`}
+				className={`fixed pointer-events-none z-[100] w-max max-w-[min(35vh,calc(100vw-20px))] max-h-[calc(100vh-20px)] overflow-y-auto rounded-lg border border-amber-400 bg-slate-900 px-3 py-2 text-xs text-slate-100 shadow-[0_4px_18px_rgba(0,0,0,0.65)] transition-opacity duration-250 ${content && show ? 'opacity-100' : 'opacity-0'}`}
 				style={{
-					top: `${pos.y + offsetY}px`,
-					left: `${pos.x + offsetX}px`,
+					top: `${pos.y}px`,
+					left: `${pos.x}px`,
+					transform: 'translateX(-50%)',
 				}}
 			>
 				{content}

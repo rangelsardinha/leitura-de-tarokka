@@ -20,7 +20,7 @@ const labels: Record<string, string> = {
 export default function Switch({ label, value, toggleAction, className }: SwitchProps) {
 	return (
 		<label
-			className={`flex items-center justify-between gap-2 w-full cursor-pointer text-yellow-400 hover:text-yellow-300 ${className}`}
+			className={`flex min-h-8 items-center justify-between gap-2 w-full cursor-pointer text-amber-300 hover:text-amber-100 ${className}`}
 		>
 			<span className="text-sm">{labels[label] ?? label.replace(nonInitialCaps, ' $1')}</span>
 
@@ -36,7 +36,7 @@ export default function Switch({ label, value, toggleAction, className }: Switch
 					className={`
 						block w-8 h-4 rounded-full
 						transition-colors duration-200 ease-in
-						bg-slate-600 peer-checked:bg-slate-500
+						border border-slate-400 bg-slate-700 peer-checked:border-amber-200 peer-checked:bg-slate-500
 					`}
 				/>
 				<div
