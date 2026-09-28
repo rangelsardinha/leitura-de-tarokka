@@ -26,6 +26,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Menus nativos de sistema e tiragem agora abrem usando esquema de cores claro,
   evitando que o tema escuro do Foundry/browser deixe as opções ilegíveis.
 
+## [1.0.37] - 2026-09-28
+
+### Fixed
+
+- Botões de início e salvamento agora têm texto e ícones claros mesmo sem hover.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed
