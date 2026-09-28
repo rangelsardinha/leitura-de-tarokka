@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Manifest atualizado para apontar `readme` e `changelog` para as URLs publicas do GitHub.
 
+## [1.0.35] - 2026-09-27
+
+### Fixed
+
+- Controles de configuração com altura e contraste aprimorados.
+- Tooltips das cartas reposicionados acima da carta.
+- Workflow de release corrigido para empacotar os arquivos reais do módulo.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed
