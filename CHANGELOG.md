@@ -39,6 +39,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ícone do módulo alterado para um corvo (`fa-crow`), mantendo o padrão visual
   nativo dos controles do Foundry.
 
+## [1.0.39] - 2026-09-28
+
+### Fixed
+
+- Botão de opções agora exibe o tooltip “Opções da Leitura do Tarokka” ao passar o mouse.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed

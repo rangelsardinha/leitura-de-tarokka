@@ -14461,6 +14461,9 @@ function Eg() {
     /* @__PURE__ */ E.jsx(
       "button",
       {
+        type: "button",
+        "aria-label": "Opções da Leitura do Tarokka",
+        title: "Opções da Leitura do Tarokka",
         className: "p-2 transition-all duration-250 text-amber-300 hover:text-amber-100 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer",
         onClick: () => d((i) => !i),
         children: /* @__PURE__ */ E.jsx(lg, { className: "w-5 h-5" })

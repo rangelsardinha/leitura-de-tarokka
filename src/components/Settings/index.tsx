@@ -51,6 +51,9 @@ export default function Settings() {
 				</div>
 			</Scrim>
 			<button
+				type="button"
+				aria-label="Opções da Leitura do Tarokka"
+				title="Opções da Leitura do Tarokka"
 				className={`p-2 transition-all duration-250 text-amber-300 hover:text-amber-100 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
 				onClick={() => setOpen((prev) => !prev)}
 			>
