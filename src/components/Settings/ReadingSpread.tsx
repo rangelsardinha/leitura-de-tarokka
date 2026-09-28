@@ -35,6 +35,7 @@ export default function ReadingSpread({ className }: { className?: string }) {
 				onChange={(event) =>
 					emitSettings({ readingSpread: event.target.value as ReadingSpreadValue })
 				}
+				style={{ colorScheme: 'light' }}
 				className="h-10 min-h-10 w-full rounded-md border border-amber-400 bg-slate-900 px-3 py-2 text-sm font-semibold leading-5 text-slate-100 transition hover:border-amber-200 hover:bg-slate-800 hover:text-white focus:border-amber-200 focus:outline-none"
 			>
 				{spreadOptions.map(({ value, label }) => (

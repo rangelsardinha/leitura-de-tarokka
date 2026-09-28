@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Tooltips das cartas reposicionados acima da carta.
 - Workflow de release corrigido para empacotar os arquivos reais do módulo.
 
+## [1.0.36] - 2026-09-28
+
+### Fixed
+
+- Menus nativos de sistema e tiragem agora abrem usando esquema de cores claro,
+  evitando que o tema escuro do Foundry/browser deixe as opções ilegíveis.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed

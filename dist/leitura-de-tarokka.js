@@ -14288,6 +14288,7 @@ function fg({ className: u }) {
       {
         value: m.gameSystem,
         onChange: S,
+        style: { colorScheme: "light" },
         className: "h-10 min-h-10 w-full rounded-md border border-amber-400 bg-slate-900 px-3 py-2 text-sm font-semibold leading-5 text-slate-100 transition hover:border-amber-200 hover:bg-slate-800 hover:text-white focus:border-amber-200 focus:outline-none",
         children: hv.map(({ value: x, label: j }) => /* @__PURE__ */ E.jsx("option", { value: x, children: j }, x))
       }
@@ -14406,6 +14407,7 @@ function Sg({ className: u }) {
       {
         value: m.readingSpread,
         onChange: (x) => i({ readingSpread: x.target.value }),
+        style: { colorScheme: "light" },
         className: "h-10 min-h-10 w-full rounded-md border border-amber-400 bg-slate-900 px-3 py-2 text-sm font-semibold leading-5 text-slate-100 transition hover:border-amber-200 hover:bg-slate-800 hover:text-white focus:border-amber-200 focus:outline-none",
         children: S.map(({ value: x, label: j }) => /* @__PURE__ */ E.jsx("option", { value: x, children: xg(j, x, m.gameSystem) }, x))
       }

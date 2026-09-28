@@ -27,6 +27,7 @@ export default function GameSystem({ className }: { className?: string }) {
 			<select
 				value={settings.gameSystem}
 				onChange={handleChange}
+				style={{ colorScheme: 'light' }}
 				className="h-10 min-h-10 w-full rounded-md border border-amber-400 bg-slate-900 px-3 py-2 text-sm font-semibold leading-5 text-slate-100 transition hover:border-amber-200 hover:bg-slate-800 hover:text-white focus:border-amber-200 focus:outline-none"
 			>
 				{GAME_SYSTEMS.map(({ value, label }) => (
