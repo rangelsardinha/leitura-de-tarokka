@@ -32,6 +32,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Botões de início e salvamento agora têm texto e ícones claros mesmo sem hover.
 
+## [1.0.38] - 2026-09-28
+
+### Changed
+
+- Ícone do módulo alterado para um corvo (`fa-crow`), mantendo o padrão visual
+  nativo dos controles do Foundry.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed

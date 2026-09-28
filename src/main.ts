@@ -38,7 +38,7 @@ Hooks.once('ready', () => {
 Hooks.on('getSceneControlButtons', (controls: any) => {
 	try {
 		const title = 'LEITURA_TAROKKA.controlName';
-		const icon = 'fa-solid fa-clone';
+		const icon = 'fa-solid fa-crow';
 
 		if (Array.isArray(controls)) {
 			controls.push({
