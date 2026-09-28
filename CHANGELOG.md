@@ -51,6 +51,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Ícone externo de configurações alterado de amarelo para marrom escuro para melhorar a visibilidade sobre fundos beges.
 
+## [1.0.41] - 2026-09-28
+
+### Fixed
+
+- Ícones de comprar novamente e escolher das cartas agora usam marrom escuro para melhorar a visibilidade sobre fundos claros.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed

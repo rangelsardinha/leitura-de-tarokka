@@ -27,7 +27,7 @@ export default function StackTheDeck({
 				onMouseLeave={() => onHover(null)}
 				onTouchStart={() => onHover(<p className="text-yellow-400">Comprar novamente</p>)}
 				onTouchEnd={() => onHover(null)}
-				className={`transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
+				className={`transition-all duration-250 text-[#5b3718] hover:text-[#3f2410] hover:drop-shadow-[0_0_3px_#5b3718] cursor-pointer`}
 				onClick={curryHandleClick(onRedraw)}
 			>
 				<RefreshCw className="w-2 h-2" />
@@ -38,7 +38,7 @@ export default function StackTheDeck({
 				onMouseLeave={() => onHover(null)}
 				onTouchStart={() => onHover(<p className="text-yellow-400">Escolher</p>)}
 				onTouchEnd={() => onHover(null)}
-				className={`transition-all duration-250 text-yellow-400 hover:text-yellow-300 hover:drop-shadow-[0_0_3px_#ffd700] cursor-pointer`}
+				className={`transition-all duration-250 text-[#5b3718] hover:text-[#3f2410] hover:drop-shadow-[0_0_3px_#5b3718] cursor-pointer`}
 				onClick={curryHandleClick(onSelect)}
 			>
 				<GalleryHorizontalEnd className="w-2 h-2" />
