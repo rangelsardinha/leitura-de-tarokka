@@ -45,6 +45,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Botão de opções agora exibe o tooltip “Opções da Leitura do Tarokka” ao passar o mouse.
 
+## [1.0.40] - 2026-09-28
+
+### Fixed
+
+- Ícone externo de configurações alterado de amarelo para marrom escuro para melhorar a visibilidade sobre fundos beges.
+
 ## [1.0.33] - 2026-09-27
 
 ### Changed
